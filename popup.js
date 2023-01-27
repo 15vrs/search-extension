@@ -1,3 +1,21 @@
+/**
+ * list of chemicals to search for
+ * source: https://davidsuzuki.org/living-green/dirty-dozen-cosmetic-chemicals-avoid/
+ */
+const chemicals = [
+  'BHA', 'butylated hydroxyanisole', 'BHT', 'butylated hydroxytulolene',
+  'p-phenylenediamine', 'CI', // coal tar dyes
+  'DEA', 'diethanolamine', 'MEA', 'monoethanolamide', 'TEA', 'triethanolamine',
+  'DBP', 'dibutyl phthalate', 'DEP', 'diethyl phthalate',
+  'menthenamine', 'quaternium-15', 'DMDM hydantoin', 'imidazolidinyl urea', 'sodium hydroxymethylglycinate', // formaldehyde-releasing preservatives
+  'paraben', 'methylparaben', 'butylparaben', 'propylparaben', 'isobutylparaben', 'ethylparaben',
+  'parfum', 'diethyl phthalate', 'DEP', //fragrance
+  'PEG', 'polyethylene glycol', 'propylene glycol', '1,4-dioxane',
+  'petrolatum',
+  'cyclotetrasiloxane', 'cylcopentasiloxane', 'cyclohexasiloxane', 'D4', 'D5', 'D6', 'cyclomethicone', 'polydimethylsiloxane', 'PDMS', 'dimethicone', // siloxanes
+  'sodium laureth sulfate', 'SLES', 'sodium lauryl sulfate', 'SLS',
+  'triclosan'
+]
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
     chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, (tabContentsBlob) => {
         console.log("iinside mhtml", tab.id);
@@ -24,8 +42,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
           
           // convert stream into string?
           let string = new TextDecoder().decode(value);
-          if (string.con)
-
+          chemicals.forEach(chem => {
+            if (string.includes(chem))
+              console.log(chem, 'found')
+          });
 
 
           // Read some more, and call this function again
