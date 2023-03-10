@@ -6,7 +6,18 @@
   "action": {
     "default_popup": "main.html"
   },
+  "host_permissions": ["https://*/*"],
   "permissions": [
-    
-  ]
+    "activeTab",
+    "scripting",
+    "nativeMessaging",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["https://*/*"],
+     "js": ["content-script.js"]
+  }]
 }
