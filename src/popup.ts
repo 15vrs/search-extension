@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // receive data from content-script
 chrome.runtime.onMessage.addListener(
-    function(message, sender, sendResponse) {
-        if (!(message.data.siteSupported)) {
+    function(message: ExtensionMessage, sender, sendResponse) {
+        if (!(message.siteSupported)) {
             document.getElementById("results")!.innerHTML = "Site not yet supported"
-        } else if (message.data.siteSupported && message.data.ingredientsFound) {
+        } else if (message.siteSupported && message.data?.ingredientsFound) {
             document.getElementById("results")!.innerHTML = "Ingredients of concern found: \n" + message.data.ingredientsList;
-        } else if (message.data.siteSupported) {
+        } else if (message.siteSupported && !message.data?.ingredientsFound) {
             document.getElementById("results")!.innerHTML = "No ingredients of concern found."
         }
     }
