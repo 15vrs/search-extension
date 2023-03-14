@@ -10,3 +10,4 @@
 //         console.log("message", message);
 //     }
 // )
+console.log("extension loaded");

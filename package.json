@@ -1,0 +1,29 @@
+{
+  "name": "search-extension",
+  "version": "1.0.0",
+  "description": "online shopping extension to search for ingredients in products",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/15vrs/search-extension.git"
+  },
+  "keywords": [],
+  "author": "Vivian So",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/15vrs/search-extension/issues"
+  },
+  "homepage": "https://github.com/15vrs/search-extension#readme",
+  "devDependencies": {
+    "@types/chrome": "0.0.223",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1"
+  }
+}
