@@ -1,20 +1,5 @@
 // list of chemicals to search for
 // source: https://davidsuzuki.org/living-green/dirty-dozen-cosmetic-chemicals-avoid/
-var chemicalsList = [
-    "BHA", "butylated hydroxyanisole", "BHT", "butylated hydroxytulolene",
-    "p-phenylenediamine", "CI", // coal tar dyes
-    "DEA", "diethanolamine", "MEA", "monoethanolamide", "TEA", "triethanolamine",
-    "DBP", "dibutyl phthalate", "DEP", "diethyl phthalate",
-    "menthenamine", "quaternium-15", "DMDM hydantoin", "imidazolidinyl urea", "sodium hydroxymethylglycinate", // formaldehyde-releasing preservatives
-    "paraben", "methylparaben", "butylparaben", "propylparaben", "isobutylparaben", "ethylparaben",
-    "parfum", "diethyl phthalate", "DEP", //fragrance
-    "PEG", "polyethylene glycol", "propylene glycol", "1,4-dioxane",
-    "petrolatum",
-    "cyclotetrasiloxane", "cylcopentasiloxane", "cyclohexasiloxane", "D4", "D5", "D6", "cyclomethicone", "polydimethylsiloxane", "PDMS", "dimethicone", // siloxanes
-    "sodium laureth sulfate", "SLES", "sodium lauryl sulfate", "SLS",
-    "triclosan"
-]
-
 var dirtyDozen = {
     "bha-bht": ["BHA", "butylated hydroxyanisole", "BHT", "butylated hydroxytulolene"],
     "coal-tar-dyes": ["p-phenylenediamine", "CI"],
@@ -83,10 +68,12 @@ function findIngredients(ingredients) {
 
 function performSearch(ingredients) {
     var ofConcern = [];
-    chemicalsList.forEach((chemical) => {
-        if (ingredients.includes(chemical)) {
-            ofConcern.push(chemical)
-        }
-    });
+    for (const[category, relatedChemicals] of Object.entries(dirtyDozen)) {
+        relatedChemicals.forEach((chemical) => {
+            if (ingredients.includes(chemical)) {
+                ofConcern.push(category)
+            }
+        });
+    }
     return ofConcern;
 }
