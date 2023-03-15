@@ -1,0 +1,23 @@
+{
+  "name": "search extension",
+  "description": "search product listings for keywords",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "main.html"
+  },
+  "host_permissions": ["https://*/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "nativeMessaging",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["https://*/*"],
+     "js": ["content-script.js"]
+  }]
+}
