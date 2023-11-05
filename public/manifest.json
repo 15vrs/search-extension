@@ -16,6 +16,11 @@
   "background": {
     "service_worker": "background.js"
   },
+  "icons": {
+    "16": "icon16.svg",
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  },
   "content_scripts": [{
     "matches": ["https://*/*"],
      "js": ["content-script.js"]
