@@ -17,7 +17,8 @@ interface ExtensionMessage {
     sender: string,
     siteSupported: boolean,
     data?: {
-        ingredientsFound?: boolean,
+        ingredientsListFound: boolean,
+        ingredientsOfConcernFound?: boolean,
         ingredientsList?: string[],
     }
 }

@@ -36,13 +36,19 @@ function searchSephora() {
         // send message back to popup with ingredients that match
         if (ingredientsOfConcern.length == 0) {
             message.data = {
-                ingredientsFound: false,
+                ingredientsListFound: true,
+                ingredientsOfConcernFound: false,
             }
         } else {
             message.data = {
-                ingredientsFound: true,
+                ingredientsListFound: true,
+                ingredientsOfConcernFound: true,
                 ingredientsList: ingredientsOfConcern
             }
+        }
+    } else {
+        message.data = {
+            ingredientsListFound: false,
         }
     }
 }
@@ -55,7 +61,7 @@ function findIngredients(ingredients: string) {
     if (ingredients.includes("<br><br>")){
         ingredients = ingredients.substring(ingredients.indexOf("<br><br>"), ingredients.length);
     }
-    return ingredients;
+    return ingredients.toLowerCase();
 }
 
 function performSearch(ingredients: string) {
