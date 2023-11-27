@@ -62,7 +62,7 @@ function searchWalmart() {
     XPathResult.STRING_TYPE,
     null
   );
-  if (ingredients.resultType == 2) {
+  if (ingredients.stringValue.length > 0) {
     var result = performSearch(ingredients.stringValue.toLowerCase());
     if (result.length == 0) {
       message.data = {
