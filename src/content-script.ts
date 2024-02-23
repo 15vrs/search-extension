@@ -1,4 +1,4 @@
-import { ExtensionMessage, MessageData, dirtyDozen } from "./types";
+import { ExtensionMessage, MessageData, dirtyDozenList, ResultsList } from "./types";
 
 let message: ExtensionMessage = {
   sender: "content script",
@@ -82,15 +82,18 @@ function searchMorphe() {
 }
 
 function performSearch(ingredients: string): MessageData {
-  var ofConcern: string[] = [];
+  var ofConcern: ResultsList[] = [];
   var msgData: MessageData = { 
     ingredientsListFound: false,
     ingredientsOfConcernFound: false,
   }
-  for (const [category, relatedChemicals] of Object.entries(dirtyDozen)) {
+
+  for (const [category, data] of Object.entries(dirtyDozenList)) {
+    var relatedChemicals = data.chemicals
     relatedChemicals.forEach((chemical: string) => {
       if (ingredients.includes(chemical)) {
-        ofConcern.push(category);
+        ofConcern.push({category: category, hazards: data.hazards});
+        
       }
     });
   }

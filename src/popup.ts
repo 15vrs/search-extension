@@ -1,4 +1,4 @@
-import { ExtensionMessage } from "./types";
+import { ExtensionMessage, ResultsList } from "./types";
 
 // TODO: activate search when extension icon is clicked
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,8 +33,11 @@ chrome.runtime.onMessage.addListener(function (
     message.data?.ingredientsListFound &&
     message.data?.ingredientsOfConcernFound
   ) {
-    document.getElementById("results")!.innerHTML =
-      "Ingredients of concern found: \n" + message.data.ingredientsList;
+    var body = "Ingredients of concern found";
+    message.data.ingredientsList!.forEach((result: ResultsList) => {
+      body += "\n" + result.category + ": " + result.hazards + "\n"
+    })
+    document.getElementById("results")!.innerHTML = body;
   } else if (
     message.siteSupported &&
     message.data?.ingredientsListFound &&
