@@ -1,4 +1,4 @@
-import { ExtensionMessage, dirtyDozen } from "./types";
+import { ExtensionMessage, MessageData, dirtyDozen } from "./types";
 
 let message: ExtensionMessage = {
   sender: "content script",
@@ -31,21 +31,8 @@ function searchSephora() {
     if (element.includes("<br><br>")) {
       element = element.substring(element.indexOf("<br><br>"), element.length);
     }
-    var ingredientsOfConcern: string[] = performSearch(element.toLowerCase());
-
-    // send message back to popup with ingredients that match
-    if (ingredientsOfConcern.length == 0) {
-      message.data = {
-        ingredientsListFound: true,
-        ingredientsOfConcernFound: false,
-      };
-    } else {
-      message.data = {
-        ingredientsListFound: true,
-        ingredientsOfConcernFound: true,
-        ingredientsList: ingredientsOfConcern,
-      };
-    }
+    var result: MessageData = performSearch(element.toLowerCase());
+    message.data = result
   } else {
     message.data = {
       ingredientsListFound: false,
@@ -63,18 +50,14 @@ function searchWalmart() {
     null
   );
   if (ingredients.stringValue.length > 0) {
-    var result = performSearch(ingredients.stringValue.toLowerCase());
-    if (result.length == 0) {
-      message.data = {
-        ingredientsListFound: true,
-        ingredientsOfConcernFound: false,
-      };
-    } else {
-      message.data = {
-        ingredientsListFound: true,
-        ingredientsOfConcernFound: true,
-        ingredientsList: result,
-      };
+    var result: MessageData = performSearch(ingredients.stringValue.toLowerCase());
+    message.data = result;
+  } else {
+    message.data = {
+      ingredientsListFound: false,
+    };
+  }
+}
     }
   } else {
     message.data = {
@@ -83,8 +66,12 @@ function searchWalmart() {
   }
 }
 
-function performSearch(ingredients: string) {
+function performSearch(ingredients: string): MessageData {
   var ofConcern: string[] = [];
+  var msgData: MessageData = { 
+    ingredientsListFound: false,
+    ingredientsOfConcernFound: false,
+  }
   for (const [category, relatedChemicals] of Object.entries(dirtyDozen)) {
     relatedChemicals.forEach((chemical: string) => {
       if (ingredients.includes(chemical)) {
@@ -92,5 +79,12 @@ function performSearch(ingredients: string) {
       }
     });
   }
-  return ofConcern;
+  if (ofConcern.length == 0) {
+    msgData.ingredientsListFound = true;
+  } else {
+    msgData.ingredientsListFound = true;
+    msgData.ingredientsOfConcernFound =true,
+    msgData.ingredientsList = ofConcern;
+  }
+  return msgData;
 }
