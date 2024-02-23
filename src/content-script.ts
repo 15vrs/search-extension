@@ -13,6 +13,10 @@ if (document.title.includes("Sephora")) {
   searchWalmart();
   message.sender = "walmart";
   message.siteSupported = true;
+} else if (document.title.includes("Morphe")) {
+  searchMorphe();
+  message.sender = "morphe";
+  message.siteSupported = true;
 }
 chrome.runtime.sendMessage(message);
 
@@ -58,7 +62,18 @@ function searchWalmart() {
     };
   }
 }
+
+function searchMorphe() {
+  var element = document
+    ?.getElementById("ing-modal-content-container")
+  if (element) {
+    var elmtString = element.innerHTML.toString()
+     // strip out h3
+     if (elmtString.includes("<h3>")) {
+       elmtString = elmtString.substring(elmtString.indexOf("</h3>"), elmtString.length);
     }
+    var data: MessageData = performSearch(elmtString.toLowerCase());
+    message.data = data
   } else {
     message.data = {
       ingredientsListFound: false,
