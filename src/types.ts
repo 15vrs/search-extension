@@ -64,9 +64,11 @@ export const dirtyDozen: DirtyDozenChemicals = {
 export interface ExtensionMessage {
   sender: string;
   siteSupported: boolean;
-  data?: {
-    ingredientsListFound: boolean;
-    ingredientsOfConcernFound?: boolean;
-    ingredientsList?: string[];
-  };
+  data?: MessageData;
+}
+
+export interface MessageData {
+  ingredientsListFound: boolean;
+  ingredientsOfConcernFound?: boolean;
+  ingredientsList?: string[];
 }
